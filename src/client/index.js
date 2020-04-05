@@ -1,1 +1,2 @@
-console.log("I exist")
+import {formHandler} from './js/formHandler';
+import {nameChecker} from './js/nameChecker';
