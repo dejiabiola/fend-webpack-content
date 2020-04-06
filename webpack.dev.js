@@ -2,19 +2,28 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
   mode: 'development',
+  devtool: 'source-map',
+  stats: 'verbose',
   entry: './src/client/index.js',
+  output: {
+    libraryTarget: 'var',
+    library: 'Client'
+  },
   // output: { ...output options },
   module: {
     rules: [
       {
-        test: '/\.js$',
+        test: /\.js$/,
         exclude: /node_modules/,
         loader: 'babel-loader'
       },
+      {
+        test: /\.scss$/,
+        use: ['style-loader', 'css-loader', 'sass-loader']
+      }
     ]
   },
   plugins: [
@@ -31,9 +40,5 @@ module.exports = {
       cleanStaleWebpackAssets: true,
       protectWebpackAssets: false
     }),
-    // new BundleAnalyzerPlugin({
-    //   generateStatsFile: true,
-    //   // statsFilename: "bundleanalyser.json"
-    // }),
   ]
 }
